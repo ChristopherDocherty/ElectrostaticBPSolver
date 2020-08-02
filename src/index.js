@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import graph_copy from './graph-copy.js'
+import graph_test from './graph-test'
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {graph_test()}
   </React.StrictMode>,
   document.getElementById('root')
 );
