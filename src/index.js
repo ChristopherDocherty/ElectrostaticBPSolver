@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import graph_copy from './graph-copy.js'
-import graph_test from './graph-test'
+import heatmap_copy from './heatmap-copy.js';
 
+
+//console.log(heatmap_copy());
 
 ReactDOM.render(
   <React.StrictMode>
-    {graph_test()}
+    {heatmap_copy()}
   </React.StrictMode>,
   document.getElementById('root')
 );
