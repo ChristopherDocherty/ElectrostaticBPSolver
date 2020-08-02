@@ -7,8 +7,8 @@ import {HeatmapRect } from '@vx/heatmap';
 import test_arr from './test_arr.json';
 
 
-const cool1 = '#122549';
-const cool2 = '#b4fbde';
+const cool1 = '#e7fef4';
+const cool2 = '#0df293';
 export const background = '#28272c';
 
 const binData = test_arr.data_lst;
@@ -42,7 +42,7 @@ const rectColorScale = scaleLinear({
   domain: [colorMin, colorMax],
 });
 const opacityScale = scaleLinear({
-  range: [0.1, 1],
+  range: [1, 1],
   domain: [colorMin, colorMax],
 });
 
@@ -105,7 +105,7 @@ function heatmap_copy()  {
           opacityScale={opacityScale}
           binWidth={binWidth}
           binHeight={binWidth}
-          gap={0.25}
+          gap={0}
         >
           { heatmap_square}
         </HeatmapRect>
