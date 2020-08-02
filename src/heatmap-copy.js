@@ -1,15 +1,20 @@
 import React from 'react';
 import { Group } from '@vx/group';
-import genBins from '@vx/mock-data/lib/generators/genBins';
 import { scaleLinear } from '@vx/scale';
 import {HeatmapRect } from '@vx/heatmap';
+import { Zoom } from '@vx/zoom';
 
-import test_arr from './test_arr.json';
+import test_arr from './test_arr_wee.json';
 
-
+/*
 const cool1 = '#e7fef4';
 const cool2 = '#0df293';
 export const background = '#28272c';
+*/
+
+const cool1 = '#F6F6F6';
+const cool2 = '#080808';
+export const background = '#F6F6F6';
 
 const binData = test_arr.data_lst;
 
@@ -74,7 +79,7 @@ function heatmap_square(heatmap) {
 }
 
 
-function heatmap_copy()  {
+function heatmap_copy(zoom)  {
 
     const height = 1000;
     const width = 1000;
@@ -88,6 +93,7 @@ function heatmap_copy()  {
   const yMax = height - margin.bottom - margin.top;
 
   const binWidth = xMax / binData.length;
+  const binHeight = yMax / bucketSizeMax;
 
   xScale.range([0, xMax]);
   yScale.range([yMax, 0]);
@@ -96,7 +102,7 @@ function heatmap_copy()  {
   return width < 10 ? null : (
     <svg width={width} height={height}>
       <rect x={0} y={0} width={width} height={height} rx={14} fill={background} />
-      <Group top={margin.top} left={margin.left}>
+      <Group top={margin.top} left={margin.left} transform={zoom.toString()}>
         <HeatmapRect
           data={binData}
           xScale={xScale}
@@ -104,7 +110,7 @@ function heatmap_copy()  {
           colorScale={rectColorScale}
           opacityScale={opacityScale}
           binWidth={binWidth}
-          binHeight={binWidth}
+          binHeight={binHeight}
           gap={0}
         >
           { heatmap_square}
