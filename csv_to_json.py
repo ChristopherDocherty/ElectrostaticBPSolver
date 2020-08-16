@@ -2,7 +2,7 @@ import numpy as np
 import json
 
 
-relaxed_arr = np.loadtxt("Q3.csv", delimiter=";")
+relaxed_arr = np.loadtxt("csv_files/tester.csv", delimiter=";")
 
 
 
@@ -38,7 +38,7 @@ data_json = {
 }
 
 
-f = open("test_arr_3.json", "w")
+f = open("test_arr_wee.json", "w")
 f.write(json.dumps(data_json))
 f.close()
 
