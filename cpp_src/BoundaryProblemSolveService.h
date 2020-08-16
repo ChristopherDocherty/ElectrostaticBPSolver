@@ -29,7 +29,7 @@ class BoundaryProblemSolveService{
 
         //Boundary Generation Wrappers
         bool place_rectangle_potential_boundary(int x, int y, int width, int height, double potential);
-        bool place_circle_potential_boundary(int x, int y, int radius, double boundary_potential, std::map<std::string,bool> fix_dict); //refactor
+        bool place_circle_potential_boundary(int x, int y, int radius, circle_boundary_params params);
 
 
 

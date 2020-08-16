@@ -1,12 +1,9 @@
-#include <vector>
 #define _USE_MATH_DEFINES
+#include <vector>
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <map>
-#include <string>
-#include <tuple>
-#include <fstream>
 #include <climits>
 #include "BoundaryProblemSolveService.h"
 #include "BoundaryGenerationService.h"
@@ -124,16 +121,6 @@ double BoundaryProblemSolveService::relaxPotential_SOR(double del, int max_iter,
         change = sqrt( change / double((rows*cols)) );
         //keep track of number of iterations
         ++iter_count;
-        //TODO: Probalby change this 
-        change *= 1e7;
-
-
-
-        if(iter_count%50 == 1){
-            cout << "At iteration: " << iter_count << endl;
-            cout << "Change is: " << to_string(change) << endl;
-        }
-        change /= 1e7;
     }
 
     return change;
@@ -228,14 +215,12 @@ double BoundaryProblemSolveService::get_abs_error(int rows, int cols, vector<vec
 
 bool BoundaryProblemSolveService::place_rectangle_potential_boundary(int x, int y, int width, int height, double potential){
     
-    //TODO: perhaps deal with failed cases here?
-    boundaryGenerationService.place_rectangle_potential_boundary(x, y, width, height, potential);
+    return boundaryGenerationService.place_rectangle_potential_boundary(x, y, width, height, potential);
 
 }
 
 
-bool BoundaryProblemSolveService::place_circle_potential_boundary(int x, int y, int radius, double boundary_potential, std::map<std::string,bool> fix_dict){
+bool BoundaryProblemSolveService::place_circle_potential_boundary(int x, int y, int radius, circle_boundary_params params){
 
-    //TODO: perhaps deal with failed cases here?
-    boundaryGenerationService.place_circle_potential_boundary(x, y, radius, boundary_potential, fix_dict);
+    return boundaryGenerationService.place_circle_potential_boundary(x, y, radius, params);
 }

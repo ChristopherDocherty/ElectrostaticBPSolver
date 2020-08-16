@@ -10,7 +10,18 @@
 
 
 
-//Design this service to perform operations using pass by reference not by value
+
+struct circle_boundary_params{
+
+    double internal_potential;
+    double external_potential;
+    double boundary_potential;
+
+    bool internal_fixed;
+    bool external_fixed;
+    bool boundary_fixed;
+};
+
 class BoundaryGenerationService{
 
 
@@ -21,11 +32,15 @@ class BoundaryGenerationService{
 
 
         bool place_rectangle_potential_boundary(int x, int y, int width, int height, double potential);
-        bool place_circle_potential_boundary(int x, int y, int radius, double boundary_potential, std::map<std::string,bool> fix_dict); //refactor
+        bool place_circle_potential_boundary(int x, int y, int radius, circle_boundary_params params); 
         //For above ^^^ maybe use a struct to hold the option  data?
     
     private:
-        void complete_octants(int centre_x, int centre_y, int x, int y, double potential);
+    
+        void complete_octants(int centre_x, int centre_y, int x, int y, double potential, bool boundary_fixed, std::vector<std::vector<bool>> &has_not_been_filled);
+        void fill_tool(int x, int y, double potential, bool fixed, std::vector<std::vector<bool>> &has_not_been_filled);
+        void fill_exterior(double exterior_potential, bool exterior_fixed, std::vector<std::vector<bool>> &has_not_been_filled);
+
 
         int rows, cols;
         
@@ -33,5 +48,9 @@ class BoundaryGenerationService{
         std::vector<std::vector<bool>> fixed_indices;
 
 };
+
+
+
+
 
 #endif
