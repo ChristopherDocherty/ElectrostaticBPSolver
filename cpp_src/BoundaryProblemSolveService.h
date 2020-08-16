@@ -9,28 +9,25 @@
 #include <string>
 #include <tuple>
 #include <fstream>
-#include "BoundaryGenerationService.h"
 
 class BoundaryProblemSolveService{
 
     public:
 
-        BoundaryProblemSolveService(int rows, int cols);
+        BoundaryProblemSolveService(std::vector<std::vector<double>> mesh, std::vector<std::vector<bool>> fixed_indices);
 
 
         //Relaxation method
-        double relaxPotential_SOR(double, int, bool);
+        double relaxPotential_SOR(double del, int max_iter, bool interpolating);
 
         //Interpolation
-        double lagInterpolate(int, int, int, int);        
-        double lagInterpolate2(int, int, int, int);
+        double lagInterpolate(int axis, int x_coord, int y_coord, int num_pointst);        
+        double lagInterpolate2(int axis, int x_coord, int y_coord, int num_points);
 
-        double get_abs_error(int rows, int cols, std::vector<std::vector<double>> A, std::vector<std::vector<double>> B);
 
-        //Boundary Generation Wrappers
-        bool place_rectangle_potential_boundary(int x, int y, int width, int height, double potential);
-        bool place_circle_potential_boundary(int x, int y, int radius, circle_boundary_params params);
 
+        //Temp
+        void save_to_csv(std::string fname);
 
 
     private:
@@ -38,7 +35,6 @@ class BoundaryProblemSolveService{
         int rows, cols;
         std::vector<std::vector<double>> mesh;
         std::vector<std::vector<bool>> fixed_indices;
-        BoundaryGenerationService boundaryGenerationService;
 
 };
 

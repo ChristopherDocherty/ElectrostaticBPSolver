@@ -9,8 +9,22 @@ using namespace std;
 
 
 
-BoundaryGenerationService::BoundaryGenerationService(int rows, int cols, vector<vector<double>> &mesh, vector<vector<bool>> &fixed_indices): rows(rows), cols(cols), mesh(mesh), fixed_indices(fixed_indices){}
+BoundaryGenerationService::BoundaryGenerationService(vector<vector<double>> mesh, vector<vector<bool>> fixed_indices): mesh(mesh), fixed_indices(fixed_indices){
 
+    rows = mesh.size();
+    cols = mesh[0].size();
+
+}
+
+
+BoundaryGenerationService::BoundaryGenerationService(int rows, int cols): rows(rows), cols(cols){
+
+    vector<vector<double>> blank_mesh(rows, vector<double>(cols, 0));
+    vector<vector<bool>> blank_fixed_indices(rows, vector<bool>(cols, false));
+
+    mesh = blank_mesh;
+    fixed_indices = blank_fixed_indices;
+}
 
 
 
@@ -22,7 +36,8 @@ bool BoundaryGenerationService::place_rectangle_potential_boundary(int x, int y,
     */
    
 
-    if( x + width > cols || y + height > rows ){
+    if( x + width > cols || y + height > rows ||
+        x < 0 || y < 0){
         return false;
     }
 
@@ -45,15 +60,16 @@ bool BoundaryGenerationService::place_circle_potential_boundary(int centre_x, in
 
 
     vector<vector<bool>> has_not_been_filled(rows, vector<bool>(cols, true));
+    
+    bool all_passed = true;
 
-    //Implementation of Bresenham's Algorithm for boundary
-    try 
-    {
-
+    if(params.set_boundary){
+        //Implementation of Bresenham's Algorithm for boundary
         int x_pos = 0, y_pos = radius;
         int decision_param = 3 - (2 * radius);
 
-        complete_octants(centre_x, centre_y, x_pos, y_pos, params.boundary_potential, params.boundary_fixed, has_not_been_filled);
+
+        all_passed &= complete_octants(centre_x, centre_y, x_pos, y_pos, params.boundary_potential, params.boundary_fixed, has_not_been_filled);
 
         while( y_pos >= x_pos ) {
 
@@ -69,64 +85,53 @@ bool BoundaryGenerationService::place_circle_potential_boundary(int centre_x, in
                 decision_param = decision_param + 4 * x_pos + 6;
 
             }
-        
-            complete_octants(centre_x, centre_y, x_pos, y_pos, params.boundary_potential, params.boundary_fixed, has_not_been_filled);
+
+            all_passed &= complete_octants(centre_x, centre_y, x_pos, y_pos, params.boundary_potential, params.boundary_fixed, has_not_been_filled);
 
         }
     }
-    catch(exception& e) 
-    {
-        return false;
-    }
 
     //Fill the interior
-    if(params.internal_potential != 0 && params.internal_fixed != false)
+    if(params.set_internal)
         fill_tool(centre_x, centre_y,params.internal_potential, params.internal_fixed, has_not_been_filled);
 
     //Fill the exterior
-    fill_exterior(params.external_potential, params.external_potential, has_not_been_filled);
+    if(params.set_external)
+        fill_exterior(params.external_potential, params.external_fixed, has_not_been_filled);
     
+    return all_passed;
+}
+
+bool BoundaryGenerationService::complete_octants(int centre_x, int centre_y, int x, int y, double potential, bool boundary_fixed, vector<vector<bool>> &has_not_been_filled){
+
+        bool all_passed = true;
+
+        all_passed &= fill_in_mesh_for_circle(centre_x + x, centre_y + y, potential, boundary_fixed, has_not_been_filled);
+        all_passed &= fill_in_mesh_for_circle(centre_x - x, centre_y + y, potential, boundary_fixed, has_not_been_filled);
+        all_passed &= fill_in_mesh_for_circle(centre_x + x, centre_y - y, potential, boundary_fixed, has_not_been_filled);
+        all_passed &= fill_in_mesh_for_circle(centre_x - x, centre_y - y, potential, boundary_fixed, has_not_been_filled);
+        all_passed &= fill_in_mesh_for_circle(centre_x + y, centre_y + x, potential, boundary_fixed, has_not_been_filled);
+        all_passed &= fill_in_mesh_for_circle(centre_x - y, centre_y + x, potential, boundary_fixed, has_not_been_filled);
+        all_passed &= fill_in_mesh_for_circle(centre_x + y, centre_y - x, potential, boundary_fixed, has_not_been_filled);
+        all_passed &= fill_in_mesh_for_circle(centre_x - y, centre_y - x, potential, boundary_fixed, has_not_been_filled);
+
+        return all_passed;
+}
+
+
+bool BoundaryGenerationService::fill_in_mesh_for_circle(int x, int y, double potential, bool fixed, vector<vector<bool>> &has_not_been_filled){
+    
+    if(!coord_in_range(x, y))
+        return false;
+
+    mesh[x][y] = potential;
+    fixed_indices[x][y] = fixed;
+    has_not_been_filled[x][y] = false;
+
     return true;
+
 }
 
-void BoundaryGenerationService::complete_octants(int centre_x, int centre_y, int x, int y, double potential, bool boundary_fixed, vector<vector<bool>> &has_not_been_filled){
-
-    try
-    {
-        mesh[centre_x + x][ centre_y + y] = potential;
-        mesh[centre_x - x][ centre_y + y] = potential;
-        mesh[centre_x + x][ centre_y - y] = potential;
-        mesh[centre_x - x][ centre_y - y] = potential;
-        mesh[centre_x + y][ centre_y + x] = potential;
-        mesh[centre_x - y][ centre_y + x] = potential;
-        mesh[centre_x + y][ centre_y - x] = potential;
-        mesh[centre_x - y][ centre_y - x] = potential;
-
-        fixed_indices[centre_x + x][ centre_y + y] = boundary_fixed;
-        fixed_indices[centre_x - x][ centre_y + y] = boundary_fixed;
-        fixed_indices[centre_x + x][ centre_y - y] = boundary_fixed;
-        fixed_indices[centre_x - x][ centre_y - y] = boundary_fixed;
-        fixed_indices[centre_x + y][ centre_y + x] = boundary_fixed;
-        fixed_indices[centre_x - y][ centre_y + x] = boundary_fixed;
-        fixed_indices[centre_x + y][ centre_y - x] = boundary_fixed;
-        fixed_indices[centre_x - y][ centre_y - x] = boundary_fixed;
-
-        has_not_been_filled[centre_x + x][ centre_y + y] = false;
-        has_not_been_filled[centre_x - x][ centre_y + y] = false;
-        has_not_been_filled[centre_x + x][ centre_y - y] = false;
-        has_not_been_filled[centre_x - x][ centre_y - y] = false;
-        has_not_been_filled[centre_x + y][ centre_y + x] = false;
-        has_not_been_filled[centre_x - y][ centre_y + x] = false;
-        has_not_been_filled[centre_x + y][ centre_y - x] = false;
-        has_not_been_filled[centre_x - y][ centre_y - x] = false;
-
-    }
-    catch(exception& e)
-    {
-        throw e;
-
-    }
-}
 
 
 
@@ -134,15 +139,21 @@ void BoundaryGenerationService::complete_octants(int centre_x, int centre_y, int
 //For circle, pass a point inside to fill its interior 
 void BoundaryGenerationService::fill_tool(int x, int y, double potential, bool fixed, vector<vector<bool>> &has_not_been_filled){
 
-    if(has_not_been_filled[x][y]){
+    if(coord_in_range(x, y) && has_not_been_filled[x][y]){
 
-        mesh[x][y] = potential;
-        fixed_indices[x][y] = fixed;
-        has_not_been_filled[x][y] = false;
 
+        fill_in_mesh_for_circle(x, y, potential, fixed, has_not_been_filled);
+
+        if(coord_in_range(x+1,y))
         fill_tool(x+1, y, potential, fixed, has_not_been_filled);
+        
+        if(coord_in_range(x-1,y))
         fill_tool(x-1, y, potential, fixed, has_not_been_filled);
+        
+        if(coord_in_range(x,y+1))
         fill_tool(x, y+1, potential, fixed, has_not_been_filled);
+        
+        if(coord_in_range(x,y-1))
         fill_tool(x, y-1, potential, fixed, has_not_been_filled);
 
     }
@@ -193,4 +204,18 @@ void BoundaryGenerationService::fill_exterior(double exterior_potential, bool ex
     }    
 
 
+}
+
+bool BoundaryGenerationService::coord_in_range(int x, int y){
+    return x < rows && y < cols && x >= 0 && y >= 0;
+}
+
+
+
+vector<vector<double>> BoundaryGenerationService::get_mesh(){
+    return mesh;
+}
+
+vector<vector<bool>> BoundaryGenerationService::get_fixed_indices(){
+    return fixed_indices;
 }

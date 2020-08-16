@@ -6,7 +6,6 @@
 #include <map>
 #include <climits>
 #include "BoundaryProblemSolveService.h"
-#include "BoundaryGenerationService.h"
 
 using namespace std;
 
@@ -16,16 +15,10 @@ using namespace std;
 //             Constructors             //
 //////////////////////////////////////////
 
-BoundaryProblemSolveService::BoundaryProblemSolveService(int rows, int cols): rows(rows), cols(cols){
+BoundaryProblemSolveService::BoundaryProblemSolveService(vector<vector<double>> mesh, vector<vector<bool>> fixed_indices): mesh(mesh), fixed_indices(fixed_indices){
 
-    vector<vector<double>> blank_mesh(rows, vector<double>(cols, 0));
-    vector<vector<bool>> blank_fixed_indices(rows, vector<bool>(cols, false));
-
-    mesh = blank_mesh;
-    fixed_indices = blank_fixed_indices;
-
-    BoundaryGenerationService genService(rows, cols, mesh, fixed_indices);
-    boundaryGenerationService = genService;
+    rows = mesh.size();
+    cols = mesh[0].size();
 
 }
 
@@ -190,37 +183,38 @@ double BoundaryProblemSolveService::lagInterpolate2(int axis, int x_coord, int y
 }
 
 
-double BoundaryProblemSolveService::get_abs_error(int rows, int cols, vector<vector<double>> A, vector<vector<double>> B){
-
-  double err = 0;
-
-  for(int i=0;i<rows;i++){
-    for(int j=0;j<cols;j++){
-      err += std::abs(A[i][j]-B[i][j]);
-    }
-  }
-
-  return err;
-
-}
 
 
 
 
-//////////////////////////////////////////
-//      Boundary Generation Wrappers    //
-//////////////////////////////////////////
+
+//////////////////////////////
+//        Testing only      //
+//////////////////////////////
 
 
+void BoundaryProblemSolveService::save_to_csv(string fname){
 
-bool BoundaryProblemSolveService::place_rectangle_potential_boundary(int x, int y, int width, int height, double potential){
+    ofstream csv_file;
+
+    csv_file.open(fname);
+
+    for(int i = 0; i != rows; ++i){
+        for(int j = 0; j != cols; ++j){
     
-    return boundaryGenerationService.place_rectangle_potential_boundary(x, y, width, height, potential);
+            csv_file << mesh[i][j];
 
-}
+            if(j != mesh.size()-1){
+                csv_file << ";";
+            }
+
+        }
+        csv_file << "\n";
+    }
+
+    csv_file.close();
+
+}	
 
 
-bool BoundaryProblemSolveService::place_circle_potential_boundary(int x, int y, int radius, circle_boundary_params params){
 
-    return boundaryGenerationService.place_circle_potential_boundary(x, y, radius, params);
-}
