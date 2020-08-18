@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Sidebar from './Sidebar.js';
-import CircleCard from './Cards/CircleCard.js'
 
 //console.log(heatmap_copy());
 

@@ -23,7 +23,7 @@
     font-weight: 500;
     font-size: 1.6vh;
 
-    
+    overflow:hidden; /*TODO: just a hotfit*/
 }
 
 .AppTitle {
@@ -80,9 +80,11 @@
 
 
 .ShapeList {
+    position: absolute;
+    top: 6.5vh;
+
     height: 63.47vh;
 
-    margin-top: 6.5vh;
     margin-right: 5px;
     display: flex;
     flex-direction: column;
@@ -123,8 +125,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    text-align: center;
+    align-items: center;
 
     font-size: 2.35vh;
 

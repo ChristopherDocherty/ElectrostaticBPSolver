@@ -1,4 +1,4 @@
-import React, {useState, Component} from 'react';
+import React, {Component} from 'react';
 import './CircleCard.css';
 import {CSSTransition} from 'react-transition-group';
 import SettingsItem from './SettingsItem.js';
@@ -17,15 +17,26 @@ class CircleCard extends Component {
 
     render(){
 
+        let confirmButton = null;
+
+        if(this.props.inserting){
+            confirmButton = 
+                <div className="ConfirmButton" onClick={() => this.props.insertNewCircle()}>
+                    <div>Confirm</div>
+                </div>
+        }
+
+
+
         return(
                 <CSSTransition
                     in={this.state.showCard}
                     timeout={300}
-                    classNames="CircleCard"
+                    classNames= {this.props.inserting ? "CircleCardInsert" : "CircleCard"}
                     unmountOnExit
                   >
 
-                    <div className="CircleCard">
+                    <div className={this.props.inserting ? "CircleCardInsert" : "CircleCard"}>
 
 
                         <div className="CardTitle">Circle 1</div>
@@ -64,7 +75,7 @@ class CircleCard extends Component {
                         </div>
 
 
-
+                        {confirmButton}
                       </div>
 
                 </CSSTransition>
