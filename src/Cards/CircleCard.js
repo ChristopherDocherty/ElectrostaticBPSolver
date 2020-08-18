@@ -32,33 +32,30 @@ function CircleCard() {
 
                     <div className="PotentialSettings" style={{top: "60px"}}> 
                         {
-                            ["Centre X", "Centre Y"].map( (x, i) => <SettingsItem title={x} key={i}/>)
+                            ["Centre X", "Centre Y"].map( (x, i) => <SettingsItem title={x} inputType="text" key={i}/>)
                         }
                     </div>
 
                     <div className="PotentialSettings" style={{top: "88px"}}> 
                         
-                        <SettingsItem title={"Radius"}/>
+                        <SettingsItem title={"Radius"} inputType="text"/>
                         
                     </div>
 
 
                     <div className="PotentialSettings" style={{top: "155px"}}> 
-                        {
-                            ["Fix Values", "Potential"].map( (x, i) => <SettingsItem title={x} key={i}/>)
-                        }
+                        <SettingsItem title="Fix Values" inputType="checkbox" />
+                        <SettingsItem title="Potential" inputType="text" />
                     </div>
 
                     <div className="PotentialSettings" style={{top: "220px"}}> 
-                        {
-                            ["Fix Values", "Potential"].map( (x, i) => <SettingsItem title={x} key={i}/>)
-                        }
+                        <SettingsItem title="Fix Values" inputType="checkbox" />
+                        <SettingsItem title="Potential" inputType="text" />
                     </div>
 
                     <div className="PotentialSettings" style={{top: "284px"}}> 
-                        {
-                            ["Fix Values", "Potential"].map( (x, i) => <SettingsItem title={x} key={i}/>)
-                        }
+                        <SettingsItem title="Fix Values" inputType="checkbox" />
+                        <SettingsItem title="Potential" inputType="text" />
                     </div>
 
 
@@ -75,8 +72,8 @@ function CircleCard() {
                     Hit me
                 </button>
             
-
         </div>
+
 
     )
 

@@ -12,7 +12,7 @@
 }
 
 
-input{
+input[type="checkbox"]{
     position: absolute;
     opacity: 0;
   }
@@ -57,3 +57,18 @@ input{
   
   
   
+input[type="text"] {
+    width: 48px;
+    height: 17px;
+
+    border:0px;
+    border-radius: 2px;
+    text-align: right;
+}
+
+input[type="text"]:focus {
+
+    border:0px;
+    outline-color: #90CAF9;
+
+}
