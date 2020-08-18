@@ -8,6 +8,7 @@ function Checkbox(props) {
     return (
         <div>
         <input type="checkbox"
+        disabled={!props.updateable}
         checked={props.checked}
         onChange={() => {props.setChecked(!props.checked); console.log("Click registered")}}/>
         <div className="CheckboxTrick">

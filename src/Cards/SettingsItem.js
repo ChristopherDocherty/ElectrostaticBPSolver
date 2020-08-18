@@ -8,8 +8,8 @@ function SettingsItem(props) {
 
 
 
-    const [checked, setChecked] = useState(false);
-    const [textboxValue, setTextboxValue] = useState("");
+    const [checked, setChecked] = useState(props.checked);
+    const [textboxValue, setTextboxValue] = useState(props.textboxValue);
 
 
     if(props.inputType === "checkbox"){
@@ -18,7 +18,7 @@ function SettingsItem(props) {
 
             <label className="SettingsItem">
                 <div>{props.title}</div> 
-                <Checkbox checked={checked} setChecked = {setChecked}/>
+                <Checkbox checked={checked} setChecked = {setChecked} updateable={props.updateable}/>
             </label>
 
 
@@ -29,7 +29,7 @@ function SettingsItem(props) {
         return(
             <label className="SettingsItem">
                 <div>{props.title}</div>         
-                <input style={{background:"white"}} type="text" value={textboxValue} onChange= {e => setTextboxValue(e.target.value)} />        
+                <input style={{background:"white"}} type="text" value={textboxValue} onChange= {e => setTextboxValue(e.target.value)} disabled={!props.updateable} />        
             </label>
 
 
