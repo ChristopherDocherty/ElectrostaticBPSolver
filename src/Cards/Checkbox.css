@@ -1,0 +1,44 @@
+input[type="checkbox"]{
+    position: absolute;
+    opacity: 0;
+  }
+
+
+.CheckboxTrick {
+    opacity: 1;
+
+    width: 1.6vh;
+    height: 1.6vh;
+    background: white;
+    border-radius: 2px;
+}
+
+.CheckboxTrickInside {
+    opacity: 1;
+
+    width: 1.6vh;
+    height: 1.6vh;
+    background: green;
+    border-radius: 2px;
+
+    transform: scale(1.1);
+}
+
+.CheckboxTrickInside-enter {
+    transform: scale(0);
+}
+
+.CheckboxTrickInside-enter-active {
+    transform: scale(1.1);
+    transition: transform 200ms;
+}
+
+.CheckboxTrickInside-exit {
+    transform: scale(1.1);
+    
+  }
+  
+.CheckboxTrickInside-exit-active {
+    transform: scale(0);
+    transition: transform 200ms;
+}

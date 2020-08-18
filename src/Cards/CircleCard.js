@@ -11,9 +11,6 @@ function CircleCard() {
 
 
     return(
-        <div>
-
-
             <CSSTransition
                 in={showCard}
                 timeout={300}
@@ -21,39 +18,39 @@ function CircleCard() {
                 unmountOnExit
               >
 
-                <div className="CircleCard" style={{color:"white", textAlign:"center"}}>
+                <div className="CircleCard">
                     
                     
                     <div className="CardTitle">Circle 1</div>
 
-                    <div className="SubTitle" style={{top: "127px"}}>Boundary</div>
-                    <div className="SubTitle" style={{top: "190px"}}>Inside</div>
-                    <div className="SubTitle" style={{top: "250px"}}>Outside</div>
+                    <div className="SubTitle" style={{top: "12.4vh"}}>Boundary</div>
+                    <div className="SubTitle" style={{top: "18.5vh"}}>Inside</div>
+                    <div className="SubTitle" style={{top: "24.5vh"}}>Outside</div>
 
-                    <div className="PotentialSettings" style={{top: "60px"}}> 
+                    <div className="PotentialSettings" style={{top: "5.85vh"}}> 
                         {
                             ["Centre X", "Centre Y"].map( (x, i) => <SettingsItem title={x} inputType="text" key={i}/>)
                         }
                     </div>
 
-                    <div className="PotentialSettings" style={{top: "88px"}}> 
+                    <div className="PotentialSettings" style={{top: "8.6vh"}}> 
                         
                         <SettingsItem title={"Radius"} inputType="text"/>
                         
                     </div>
 
 
-                    <div className="PotentialSettings" style={{top: "155px"}}> 
+                    <div className="PotentialSettings" style={{top: "15.1vh"}}> 
                         <SettingsItem title="Fix Values" inputType="checkbox" />
                         <SettingsItem title="Potential" inputType="text" />
                     </div>
 
-                    <div className="PotentialSettings" style={{top: "220px"}}> 
+                    <div className="PotentialSettings" style={{top: "21.5vh"}}> 
                         <SettingsItem title="Fix Values" inputType="checkbox" />
                         <SettingsItem title="Potential" inputType="text" />
                     </div>
 
-                    <div className="PotentialSettings" style={{top: "284px"}}> 
+                    <div className="PotentialSettings" style={{top: "27.7vh"}}> 
                         <SettingsItem title="Fix Values" inputType="checkbox" />
                         <SettingsItem title="Potential" inputType="text" />
                     </div>
@@ -63,18 +60,6 @@ function CircleCard() {
                   </div>
 
             </CSSTransition>
-
-
-
-
-
-                <button onClick={() => showCard ? setShowCard(false) : setShowCard(true)} style={{position:"absolute", top:"200px", left:"500px"}}>
-                    Hit me
-                </button>
-            
-        </div>
-
-
     )
 
 
