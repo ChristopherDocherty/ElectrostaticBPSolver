@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
+
+
+.CircleCard {
+
+    position: absolute;
+    top: 50px;
+    left:15px;
+
+    width: 361.58px;
+    height: 322px;
+
+    background: #42A5F5;
+    border-radius: 9px;
+
+
+    display: flex;
+}
+
+
+.CircleCard-enter {
+    opacity: 0;
+    transform: translateY(-10%);
+
+}
+
+.CircleCard-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.CircleCard-exit {
+  opacity: 1;
+}
+
+.CircleCard-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+
+
+.CardTitle {
+  position: absolute; /* this will work fine as long as the CircleCard class is relative or absolutely positioned*/
+  top: 10px;
+  left: 12px;
+
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 23px;
+}
+
+
+.SubTitle{
+  position: absolute;
+  left: 17px;
+
+  font-family: Roboto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+}
+
+
+
+.PotentialSettings {
+  position: absolute;
+  display: flex;
+
+  margin-left: 40px;
+  height: 20px;
+}
+
+

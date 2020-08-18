@@ -1,0 +1,74 @@
+
+.SettingsItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 140px;
+
+    margin-left: 13px;
+
+
+    
+}
+
+
+input[type="checkbox"]{
+    position: absolute;
+    opacity: 0;
+  }
+
+
+.CheckboxTrick {
+    opacity: 1;
+
+    width:16px;
+    height:16px;
+    background: white;
+    border-radius: 2px;
+}
+
+.CheckboxTrickInside {
+    opacity: 1;
+
+    width:16px;
+    height:16px;
+    background: green;
+    border-radius: 2px;
+}
+
+.CheckboxTrickInside-enter {
+    transform: scale(0);
+}
+
+.CheckboxTrickInside-enter-active {
+    transform: scale(1);
+    transition: transform 200ms;
+}
+
+.CheckboxTrickInside-exit {
+    transform: scale(1);
+    
+  }
+  
+.CheckboxTrickInside-exit-active {
+    transform: scale(0);
+    transition: transform 200ms;
+}
+  
+  
+  
+input[type="text"] {
+    width: 48px;
+    height: 17px;
+
+    border:0px;
+    border-radius: 2px;
+    text-align: right;
+}
+
+input[type="text"]:focus {
+
+    border:0px;
+    outline-color: #90CAF9;
+
+}

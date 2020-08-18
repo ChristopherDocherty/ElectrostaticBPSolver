@@ -79,12 +79,12 @@ function heatmap_square(heatmap) {
 }
 
 
-function heatmap_copy(zoom)  {
+function heatmap_copy()  {
 
-    const height = 1000;
-    const width = 1000;
-    const margin = { top: 10, left: 20, right: 20, bottom: 110 };
-    const separation = 20;
+  const height = 800;
+  const width = 800;
+  const margin = { top: 10, left: 20, right: 20, bottom: 110 };
+  const separation = 20;
 
   // bounds
   const size =
@@ -102,7 +102,7 @@ function heatmap_copy(zoom)  {
   return width < 10 ? null : (
     <svg width={width} height={height}>
       <rect x={0} y={0} width={width} height={height} rx={14} fill={background} />
-      <Group top={margin.top} left={margin.left} transform={zoom.toString()}>
+      <Group top={margin.top} left={margin.left}>
         <HeatmapRect
           data={binData}
           xScale={xScale}
