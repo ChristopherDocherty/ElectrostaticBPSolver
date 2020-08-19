@@ -56,7 +56,7 @@ class Sidebar extends Component {
 
 
         return(
-            <div className="Sidebar">
+            <div className={this.props.className}>
 
                 <div className="AppTitle">
                     Electrostatic Boundary Problem Solver

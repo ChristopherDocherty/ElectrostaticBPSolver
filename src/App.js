@@ -1,6 +1,12 @@
 import React from 'react';
 import BoundaryGenerationService from './BoundarySolver/BoundaryGenerationService';
 import BoundaryProblemSolveService from './BoundarySolver/BoundaryProblemSolverService';
+import Sidebar from "./Sidebar.js";
+import Heatmap from './Heatmap.js';
+import ParentSize from '@vx/responsive/lib/components/ParentSize';
+
+import './App.css';
+
 
 class Circle{
   constructor(centreX, centreY, radius, params){
@@ -47,7 +53,7 @@ class App extends React.Component {
     
     var second_test = new BoundaryProblemSolveService(test.mesh, test.fixedIndices);
     second_test.relaxPotentialSOR(0.0001, 100, false);
-    console.log("stop");
+
 
   }
 
@@ -56,7 +62,21 @@ class App extends React.Component {
 
 
 
-    return (<div onClick={this.wrapper} style={{width:"300px", height:"150px", background:"aquablue"}}>press</div>);
+    return( 
+      <div>
+          <div className="testing" >
+          <ParentSize className="graph-container" debounceTime={100}>
+           {({ width: visWidth, height: visHeight }) => 
+                <Heatmap width={visWidth} height={visWidth} />
+              }
+            
+          </ParentSize>
+          </div>
+
+          <Sidebar className="Sidebar"/>
+
+      </div>
+    );
   }
 }
 export default App;

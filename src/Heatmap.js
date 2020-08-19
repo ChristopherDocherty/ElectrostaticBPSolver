@@ -2,18 +2,12 @@ import React from 'react';
 import { Group } from '@vx/group';
 import { scaleLinear } from '@vx/scale';
 import {HeatmapRect } from '@vx/heatmap';
-import { Zoom } from '@vx/zoom';
 
 import test_arr from './test_arr_wee.json';
 
-/*
-const cool1 = '#e7fef4';
-const cool2 = '#0df293';
-export const background = '#28272c';
-*/
 
-const cool1 = '#F6F6F6';
-const cool2 = '#080808';
+const cool1 = '#BBDEFB';
+const cool2 = '#0D47A1';
 export const background = '#F6F6F6';
 
 const binData = test_arr.data_lst;
@@ -67,11 +61,6 @@ function heatmap_square(heatmap) {
             y={bin.y}
             fill={bin.color}
             fillOpacity={bin.opacity}
-            onClick={() => {
-              if (!events) return;
-              const { row, column } = bin;
-              alert(JSON.stringify({ row, column, bin: bin.bin }));
-            }}
           >
           </rect>
         )),
@@ -79,16 +68,17 @@ function heatmap_square(heatmap) {
 }
 
 
-function heatmap_copy()  {
+function Heatmap(props)  {
 
-  const height = 800;
-  const width = 800;
-  const margin = { top: 10, left: 20, right: 20, bottom: 110 };
+  const width = props.width;
+  const height = props.height;
+
+
+  const margin = { top: 0, left: 0, right: 0, bottom: 0 };
   const separation = 20;
 
   // bounds
-  const size =
-    width > margin.left + margin.right ? width - margin.left - margin.right - separation : width;
+  const size =width;
   const xMax = size;
   const yMax = height - margin.bottom - margin.top;
 
@@ -100,27 +90,27 @@ function heatmap_copy()  {
 
 
   return width < 10 ? null : (
-    <svg width={width} height={height}>
-      <rect x={0} y={0} width={width} height={height} rx={14} fill={background} />
-      <Group top={margin.top} left={margin.left}>
-        <HeatmapRect
-          data={binData}
-          xScale={xScale}
-          yScale={yScale}
-          colorScale={rectColorScale}
-          opacityScale={opacityScale}
-          binWidth={binWidth}
-          binHeight={binHeight}
-          gap={0}
-        >
-          { heatmap_square}
-        </HeatmapRect>
+      <svg width={width} height={height}>
+        <rect x={0} y={0} width={width} height={height} rx={14} fill={background}/>
+        <Group top={margin.top} left={margin.left}>
+          <HeatmapRect
+            data={binData}
+            xScale={xScale}
+            yScale={yScale}
+            colorScale={rectColorScale}
+            opacityScale={opacityScale}
+            binWidth={binWidth}
+            binHeight={binHeight}
+            gap={0}
+          >
+            {heatmap_square}
+          </HeatmapRect>
 
 
-      </Group>
-    </svg>
+        </Group>
+      </svg>
   );
 };
 
 
-export default heatmap_copy;
+export default Heatmap;
