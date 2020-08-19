@@ -1,42 +1,68 @@
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import './SettingsItem.css';
 import Checkbox from './Checkbox.js';
 
 
-function SettingsItem(props) {
+class SettingsItem extends Component {
 
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            checked : props.checked,
+            textboxValue : props.textboxValue /*will eb shallow copy as primitive types*/
+        }
 
-
-    const [checked, setChecked] = useState(props.checked);
-    const [textboxValue, setTextboxValue] = useState(props.textboxValue);
-
-
-    if(props.inputType === "checkbox"){
-        return(
-
-
-            <label className="SettingsItem">
-                <div>{props.title}</div> 
-                <Checkbox checked={checked} setChecked = {setChecked} updateable={props.updateable}/>
-            </label>
-
-
-        );
     }
 
-    if(props.inputType === "text"){
-        return(
-            <label className="SettingsItem">
-                <div>{props.title}</div>         
-                <input style={{background:"white"}} type="text" value={textboxValue} onChange= {e => setTextboxValue(e.target.value)} disabled={!props.updateable} />        
-            </label>
+
+    setChecked = (newCheckedVal) => {
+        this.setState({checked: newCheckedVal});
+
+        /*Apply change to inherited state state */
+        if("setChecked" in this.props)
+            this.props.setChecked(newCheckedVal);
+
+    };
 
 
-        );
+    setTextboxValue = (e) => {
+        this.setState({textboxValue: e.target.value});
+
+        if("setTextboxValue" in this.props)
+            this.props.setTextboxValue(e.target.value);
+
     }
 
-    return null;
+
+    render(){
+
+        if(this.props.inputType === "checkbox"){
+            return(
+
+
+                <label className="SettingsItem">
+                    <div>{this.props.title}</div> 
+                    <Checkbox checked={this.state.checked} setChecked = {this.setChecked} updateable={this.props.updateable}/>
+                </label>
+
+
+            );
+        }
+
+        if(this.props.inputType === "text"){
+            return(
+                <label className="SettingsItem">
+                    <div>{this.props.title}</div>         
+                    <input style={{background:"white"}} type="text" value={this.state.textboxValue} onChange= {(e) => this.setTextboxValue(e)} disabled={!this.props.updateable} />        
+                </label>
+
+
+            );
+        }
+
+        return null;
+    }
 }
 
 export default SettingsItem;
