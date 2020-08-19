@@ -1,78 +1,68 @@
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import './SettingsItem.css';
-import { CSSTransition } from 'react-transition-group';
+import Checkbox from './Checkbox.js';
 
 
+class SettingsItem extends Component {
 
+    constructor(props) {
+        super(props);
 
-function HiddenCheckbox(props) {
-    return(
-    <input type="checkbox"
-    checked={props.checked}
-    onChange={() => {props.setChecked(!props.checked); console.log("Click registered")}}/>
-    )    
+        this.state = {
+            checked : props.checked,
+            textboxValue : props.textboxValue /*will eb shallow copy as primitive types*/
+        }
 
-}
-
-
-function ShownCheckbox(props) {
-    return (
-        <div className="CheckboxTrick">
-            <CSSTransition
-                in={props.checked}
-                timeout={2000}
-                classNames="CheckboxTrickInside"
-                unmountOnExit
-              >
-
-                <div className="CheckboxTrickInside"/>
-
-            </CSSTransition>
-        </div>
-
-    )
-
-}
-
-
-
-function SettingsItem(props) {
-
-
-
-
-    const [checked, setChecked] = useState(false);
-    const [textboxValue, setTextboxValue] = useState("");
-
-
-    if(props.inputType === "checkbox"){
-        return(
-
-
-            <label className="SettingsItem">
-                <div>{props.title}</div> 
-                <ShownCheckbox checked={checked}/>
-                <HiddenCheckbox checked={checked} setChecked = {setChecked}/>
-
-
-            </label>
-
-
-        );
     }
 
-    if(props.inputType === "text"){
-        return(
-            <label className="SettingsItem">
-                <div>{props.title}</div>         
-                <input style={{background:"white"}} type="text" value={textboxValue} onChange= {e => setTextboxValue(e.target.value)} />        
-            </label>
+
+    setChecked = (newCheckedVal) => {
+        this.setState({checked: newCheckedVal});
+
+        /*Apply change to inherited state state */
+        if("setChecked" in this.props)
+            this.props.setChecked(newCheckedVal);
+
+    };
 
 
-        );
+    setTextboxValue = (e) => {
+        this.setState({textboxValue: e.target.value});
+
+        if("setTextboxValue" in this.props)
+            this.props.setTextboxValue(e.target.value);
+
     }
 
-    return null;
+
+    render(){
+
+        if(this.props.inputType === "checkbox"){
+            return(
+
+
+                <label className="SettingsItem">
+                    <div>{this.props.title}</div> 
+                    <Checkbox checked={this.state.checked} setChecked = {this.setChecked} updateable={this.props.updateable}/>
+                </label>
+
+
+            );
+        }
+
+        if(this.props.inputType === "text"){
+            return(
+                <label className="SettingsItem">
+                    <div>{this.props.title}</div>         
+                    <input style={{background:"white"}} type="text" value={this.state.textboxValue} onChange= {(e) => this.setTextboxValue(e)} disabled={!this.props.updateable} />        
+                </label>
+
+
+            );
+        }
+
+        return null;
+    }
 }
 
 export default SettingsItem;

@@ -3,18 +3,18 @@
 
 
 
+
 .CircleCard {
 
-    position: absolute;
-    top: 50px;
-    left:15px;
+    position: relative;
+    width: 35vh;
+    height: 32vh;
+    margin: 2vh;
 
-    width: 361.58px;
-    height: 322px;
 
     background: #42A5F5;
     border-radius: 9px;
-
+    font-size: 1.6vh;
 
     display: flex;
 }
@@ -44,25 +44,73 @@
 
 
 
+.CircleCardInsert {
+
+  position: relative;
+  top: 6.5vh;
+  left: 3.4vh; /*TODO: uncouple this class and sidebar class*/
+
+
+  width: 35vh;
+  height: 36vh;
+  margin-right: 0px;
+
+
+  background: #42A5F5;
+  border-radius: 9px;
+  font-size: 1.6vh;
+
+  display: flex;
+
+
+  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.35));
+
+  overflow:hidden;
+  z-index: 1;
+}
+
+
+.CircleCardInsert-enter {
+  transform: translateY(-100%);
+}
+
+.CircleCardInsert-enter-active {
+  transform: translateY(0);
+  transition: transform 300ms;
+}
+
+.CircleCardInsert-exit {
+opacity: 1;
+}
+
+.CircleCardInsert-exit-active {
+opacity: 0;
+transform: translateX();
+transition: opacity 300ms, transform 300ms;
+}
+
+
+
+
 .CardTitle {
   position: absolute; /* this will work fine as long as the CircleCard class is relative or absolutely positioned*/
-  top: 10px;
-  left: 12px;
+  top: 1vh;
+  left: 1.5vh;
 
   font-family: Roboto;
   font-weight: 500;
-  font-size: 23px;
+  font-size: 2.3vh;
 }
 
 
 .SubTitle{
   position: absolute;
-  left: 17px;
+  left: 2.3vh;
 
   font-family: Roboto;
   font-weight: 500;
   font-style: normal;
-  font-size: 16px;
+  font-size: 1.9vh;
 }
 
 
@@ -71,8 +119,24 @@
   position: absolute;
   display: flex;
 
-  margin-left: 40px;
-  height: 20px;
+  margin-left: 2.9vh;
+  height: 1.95vh;
 }
 
 
+
+.ConfirmButton {
+  position: absolute;
+  top: 32vh;
+  left: 24vh;
+  
+  
+  width: 10vh;
+  height: 3.3vh;
+  background: #64B5F6;
+  border-radius: 9px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
