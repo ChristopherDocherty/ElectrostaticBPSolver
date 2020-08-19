@@ -33,7 +33,7 @@ class BoundaryProblemSolveService {
         var hy = 1 / this.cols;
         var alpha = Math.pow(hx/hy, 2);
 
-        var omega = 2/ ( 1 + Math.sin(Math.Pi * hx) );
+        var omega = 2/ ( 1 + Math.sin(Math.PI * hx) );
         var oneMinusOmega = 1 - omega; 
 
 

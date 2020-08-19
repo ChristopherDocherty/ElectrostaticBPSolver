@@ -12,6 +12,7 @@ class Circle{
 
         this.setExternal         = params.setExternal; 
         this.setBoundary         = params.setBoundary; 
+        this.setInternal         = params.setInternal;
         this.internalPotential   = params.internalPotential;
         this.externalPotential   = params.externalPotential;
         this.boundaryPotential   = params.boundaryPotential;

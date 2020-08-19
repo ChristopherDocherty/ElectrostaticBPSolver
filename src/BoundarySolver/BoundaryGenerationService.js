@@ -9,24 +9,37 @@ class BoundaryGenerationService {
         this.rows = rows;
         this.cols = cols;
   
-        this.mesh = new Array(rows).fill(new Array(cols).fill(0));
-        this.fixedIndices = new Array(rows).fill(new Array(cols).fill(false));
+        this.mesh = Array(rows).fill().map((() => Array(cols).fill(0)));
+        this.fixedIndices = Array(rows).fill().map(() => (Array(cols).fill(false)));
+
         
     }
   
-    placeCirclePotentialBoundary(centreX, centreY, radius, params){
+    placeCirclePotentialBoundary(circle){
 
-        var hasNotBeenFilled = new Array(this.rows).fill(new Array(this.cols).fill(true));
+        let centreX, centreY, radius, 
+        setExternal, setBoundary, setInternal, 
+        internalPotential, externalPotential, boundaryPotential,
+        internalFixed, externalFixed, boundaryFixed;
+
+        ({centreX, centreY, radius, 
+            setExternal, setBoundary, setInternal, 
+            internalPotential, externalPotential, boundaryPotential,
+            internalFixed, externalFixed, boundaryFixed
+        } = {...circle} )
+
+
+        var hasNotBeenFilled = Array(this.rows).fill().map(() => Array(this.cols).fill(true));
 
         var allPassed = true;
 
-        if(params.set_boundary){
+        if(setBoundary){
 
             var xPos = 0;
             var yPos = radius;
             var decisionParam = 3 - (2 * radius);
 
-            allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, params.boundaryPotential,params.boundaryFixed, hasNotBeenFilled);
+            allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, boundaryPotential,boundaryFixed, hasNotBeenFilled);
 
             while( yPos >= xPos ) {
 
@@ -43,17 +56,18 @@ class BoundaryGenerationService {
     
                 }
 
-                allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, params.boundaryPotential,params.boundaryFixed, hasNotBeenFilled);
+                allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, boundaryPotential,boundaryFixed, hasNotBeenFilled);
 
             }
         }
 
-        if(params.setInternal)
-            this.fillTool(centreX, centreY, params.internalPotential, params.internal.fixed, hasNotBeenFilled);
+        
+        if(setInternal)
+            this.fillTool(centreX, centreY, internalPotential, internalFixed, hasNotBeenFilled);
 
-        if(params.setExternal)
-            this.fillExterior(params.externalPotential, params.externalFixed, hasNotBeenFilled);
-
+        if(setExternal)
+            this.fillExterior(externalPotential, externalFixed, hasNotBeenFilled);
+    
         return allPassed;
     };
   
@@ -83,7 +97,7 @@ class BoundaryGenerationService {
             return false;
         
         this.mesh[x][y] = potential;
-        this.fixed_indices[x][y] = fixed;
+        this.fixedIndices[x][y] = fixed;
         hasNotBeenFilled[x][y] = false;
 
         return true;
