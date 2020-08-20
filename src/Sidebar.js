@@ -22,17 +22,16 @@ class Sidebar extends Component {
 
 
         this.state = {
-            circleArr : [],
             checked : false,
             currentlyAdding : false
         }
     }
 
 
-    AddCircle(circle) {
+    addCircle(circle) {
 
         this.setState({currentlyAdding: false})        
-        this.setState({circleArr: [...this.state.circleArr, circle]})
+        this.props.addCircle(circle);
         
 
     }
@@ -49,21 +48,21 @@ class Sidebar extends Component {
             <CircleCard 
                 inserting={true} 
                 updateable={true}
-                insertNewCircle={(circle) => {this.AddCircle(circle)}}
+                insertNewCircle={(circle) => {this.addCircle(circle)}}
             /> 
             : 
             null;
 
 
         return(
-            <div className="Sidebar">
+            <div className={this.props.className}>
 
                 <div className="AppTitle">
                     Electrostatic Boundary Problem Solver
                 </div>
 
                 <div className="ShapeListContainer">
-                    <div className="ShapeTitle" onClick={ () => this.AddCircle()}>Shapes</div>
+                    <div className="ShapeTitle" onClick={ () => this.addCircle()}>Shapes</div>
                     <div className="PlusSign" onClick={ () => this.setState({currentlyAdding: true})}>
 
 
@@ -75,7 +74,7 @@ class Sidebar extends Component {
                     <TransitionGroup className="ShapeList">
                         <div>
                         {
-                            this.state.circleArr.map( (x,i) => 
+                            this.props.circleList.map( (x,i) => 
                             <CircleCard  
                                 Circle={x} 
                                 id={i}
@@ -94,8 +93,8 @@ class Sidebar extends Component {
                 </div>
 
 
-                <div className="RelaxButton">
-                    <div>Relax</div>
+                <div className="RelaxButton" onClick={this.props.handleRelaxClick}>
+                    <div>{this.props.relaxButtonText}</div>
                 </div>
 
                 <label className="InterpolSetting">
@@ -113,11 +112,3 @@ class Sidebar extends Component {
 export default Sidebar;
 
 
-
-/* Just note son how to implement the dropdown insert thing:
-
-    put shapes, the plus sign and a *hidden* div above the zindedx of the new card
-    put the new card on a z index aboev the other cards
-    Slide teh new card in from -100%
-    Can probably fix triangle to just have the div slide out only
-*/
