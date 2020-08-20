@@ -101,14 +101,14 @@ class CircleCard extends Component {
                                     title={"Centre X"} 
                                     inputType="text" 
                                     textboxValue={this.state.Circle.centreX}
-                                    setTextboxValue={(newCentreX) => this.setState({Circle: {...this.state.Circle, centreX: newCentreX}})}
+                                    setTextboxValue={(newCentreX) => this.setState({Circle: {...this.state.Circle, centreX: parseFloat(newCentreX)}})}
                                     updateable={this.props.updateable}
                                 />
                                 <SettingsItem 
                                     title={"Centre Y"} 
                                     inputType="text" 
                                     textboxValue={this.state.Circle.centreY} 
-                                    setTextboxValue={(newCentreY) => this.setState({Circle: {...this.state.Circle, centreY: newCentreY}})}      
+                                    setTextboxValue={(newCentreY) => this.setState({Circle: {...this.state.Circle, centreY: parseFloat(newCentreY)}})}      
                                     updateable={this.props.updateable}
                                 />
                             
@@ -120,7 +120,7 @@ class CircleCard extends Component {
                                 title={"Radius"} 
                                 inputType="text" 
                                 textboxValue={this.state.Circle.radius} 
-                                setTextboxValue={(newRadius) => this.setState({Circle: {...this.state.Circle, radius: newRadius}})}
+                                setTextboxValue={(newRadius) => this.setState({Circle: {...this.state.Circle, radius: parseFloat(newRadius)}})}
                                 updateable={this.props.updateable}
                             />
 
@@ -139,7 +139,7 @@ class CircleCard extends Component {
                                 title="Potential" 
                                 inputType="text" 
                                 textboxValue={this.state.Circle.boundaryPotential} 
-                                setTextboxValue={(newBoundaryPotential) => this.setState({Circle: {...this.state.Circle, boundaryPotential: newBoundaryPotential}})}
+                                setTextboxValue={(newBoundaryPotential) => this.setState({Circle: {...this.state.Circle, boundaryPotential: parseFloat(newBoundaryPotential)}})}
                                 updateable={this.props.updateable}
                             
                             />
@@ -157,7 +157,7 @@ class CircleCard extends Component {
                             title="Potential" 
                             inputType="text" 
                             textboxValue={this.state.Circle.internalPotential} 
-                            setTextboxValue={(newInternalPotential) => this.setState({Circle: {...this.state.Circle, internalPotential: newInternalPotential}})}
+                            setTextboxValue={(newInternalPotential) => this.setState({Circle: {...this.state.Circle, internalPotential: parseFloat(newInternalPotential)}})}
                             updateable={this.props.updateable}
                         />
                         </div>
@@ -175,7 +175,7 @@ class CircleCard extends Component {
                                 title="Potential" 
                                 inputType="text" 
                                 textboxValue={this.state.Circle.externalPotential} 
-                                setTextboxValue={(newExternalPotential) => this.setState({Circle: {...this.state.Circle, externalPotential: newExternalPotential}})}
+                                setTextboxValue={(newExternalPotential) => this.setState({Circle: {...this.state.Circle, externalPotential: parseFloat(newExternalPotential)}})}
                                 updateable={this.props.updateable}
                             />
                         </div>

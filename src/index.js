@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Sidebar from './Sidebar.js';
 import App from './App';
-
-//console.log(heatmap_copy());
 
 ReactDOM.render(
   <React.StrictMode>

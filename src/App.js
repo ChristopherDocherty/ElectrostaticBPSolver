@@ -1,6 +1,6 @@
 import React from 'react';
 import BoundaryGenerationService from './BoundarySolver/BoundaryGenerationService';
-import BoundaryProblemSolveService from './BoundarySolver/BoundaryProblemSolverService';
+import BoundaryProblemSolveService from './BoundarySolver/BoundaryProblemSolveService';
 import Sidebar from "./Sidebar.js";
 import Heatmap from './Heatmap.js';
 import ParentSize from '@vx/responsive/lib/components/ParentSize';
@@ -8,58 +8,100 @@ import ParentSize from '@vx/responsive/lib/components/ParentSize';
 import './App.css';
 
 
-class Circle{
-  constructor(centreX, centreY, radius, params){
-      this.centreX = centreX;
-      this.centreY = centreY;
-      this.radius = radius;
+class App extends React.Component {
 
-      this.setExternal         = params.setExternal; 
-      this.setBoundary         = params.setBoundary; 
-      this.setInternal         = params.setInternal;
-      this.internalPotential   = params.internalPotential;
-      this.externalPotential   = params.externalPotential;
-      this.boundaryPotential   = params.boundaryPotential;
-      this.internalFixed       = params.internalFixed;
-      this.externalFixed       = params.externalFixed;
-      this.boundaryFixed       = params.boundaryFixed;
+
+  constructor(props){
+    super(props);
+
+
+    this.state = {
+      circleList: [],
+      isRelaxed: false,
+      relaxButtonText: "Relax"
+    }
+
 
   }
+
+
+
+  
+  addCircle(circle) {
+    
+    this.setState({circleList: [...this.state.circleList, circle]});
+    
+  }
+
+
+  handleRelaxClick(){
+    this.setState({isRelaxed: !this.state.isRelaxed});
+    this.setState({relaxButtonText: this.state.relaxButtonText === "Relax" ? "Unrelax" : "Relax"})
+  }
+
+
+  convertToHeatmapJSON(mesh){
+
+    let binList = [];
+
+    for(let i = 0; i !== mesh.length; ++i){
+
+        let outerBinsList = {
+            bin: 0,
+            bins: []
+        };
+        for(let j = 0; j !== mesh[0].length; ++j){
+            
+            let innerJSONDict = {
+                bin: 0,
+                count: mesh[i][j]
+            }
+
+            outerBinsList.bins.push(innerJSONDict);
+        }
+
+        binList.push(outerBinsList);
+    }
+
+    return binList;
 
 }
 
-class App extends React.Component {
 
-  wrapper() {
-    var test = new BoundaryGenerationService(50, 50);
 
-    const params = {
-      setInternal : true,
-      setExternal : true,
-      setBoundary : true,
-  
-      internalPotential : 3,
-      externalPotential: -1,
-      boundaryPotential: 1,
-  
-      internalFixed: false,
-      externalFixed: false,
-      boundaryFixed: true
-    };
 
-    var test_circle =  new Circle(25, 25, 10, params);
+  createMeshFromShapeList(){
 
-    test.placeCirclePotentialBoundary(test_circle);
-    
-    var second_test = new BoundaryProblemSolveService(test.mesh, test.fixedIndices);
-    second_test.relaxPotentialSOR(0.0001, 100, false);
+    let BGService = new BoundaryGenerationService(50, 50);
 
+    for(let i = 0; i != this.state.circleList.length; ++i){
+      BGService.placeCirclePotentialBoundary(this.state.circleList[i]);
+    }
+
+    if(this.state.isRelaxed){
+      let BPSService = new BoundaryProblemSolveService(BGService.mesh, BGService.fixedIndices);
+
+          BPSService.relaxPotentialSOR(0.00001, 150, false);
+
+          return BPSService.mesh;
+
+    } else {
+      return BGService.mesh;
+    }
 
   }
+
+
+
 
 
   render() {
 
+
+
+    let meshForDisplay = this.createMeshFromShapeList();
+    let JSONforDisplay = this.convertToHeatmapJSON(meshForDisplay);
+    
 
 
     return( 
@@ -67,13 +109,19 @@ class App extends React.Component {
           <div className="testing" >
           <ParentSize className="graph-container" debounceTime={100}>
            {({ width: visWidth, height: visHeight }) => 
-                <Heatmap width={visWidth} height={visWidth} />
+                <Heatmap width={visWidth} height={visWidth} binData={JSONforDisplay}/>
               }
             
           </ParentSize>
           </div>
 
-          <Sidebar className="Sidebar"/>
+          <Sidebar 
+            className="Sidebar" 
+            circleList={this.state.circleList} 
+            addCircle={(circle) => this.addCircle(circle)} 
+            handleRelaxClick={() => this.handleRelaxClick()}
+            relaxButtonText={this.state.relaxButtonText}
+          />
 
       </div>
     );
