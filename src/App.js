@@ -19,7 +19,7 @@ class App extends React.Component {
       circleList: [],
       isRelaxed: false,
       relaxButtonText: "Relax",
-      useLagrangeInterpol: false
+      useLagrangeInterpol: true
     }
 
 
@@ -79,7 +79,7 @@ class App extends React.Component {
 
     let BGService = new BoundaryGenerationService(50, 50);
 
-    for(let i = 0; i != this.state.circleList.length; ++i){
+    for(let i = 0; i !== this.state.circleList.length; ++i){
       BGService.placeCirclePotentialBoundary(this.state.circleList[i]);
     }
 

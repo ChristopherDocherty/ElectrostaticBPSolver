@@ -18,14 +18,12 @@ class BoundaryGenerationService {
     placeCirclePotentialBoundary(circle){
 
         let centreX, centreY, radius, 
-        setExternal, setBoundary, setInternal, 
-        internalPotential, externalPotential, boundaryPotential,
-        internalFixed, externalFixed, boundaryFixed;
+        setExternal, setInternal, 
+        internalPotential, externalPotential, boundaryPotential;
 
         ({centreX, centreY, radius, 
-            setExternal, setBoundary, setInternal, 
-            internalPotential, externalPotential, boundaryPotential,
-            internalFixed, externalFixed, boundaryFixed
+            setExternal, setInternal, 
+            internalPotential, externalPotential, boundaryPotential
         } = {...circle} )
 
 
@@ -33,71 +31,70 @@ class BoundaryGenerationService {
 
         var allPassed = true;
 
-        if(setBoundary){
 
-            var xPos = 0;
-            var yPos = radius;
-            var decisionParam = 3 - (2 * radius);
+        var xPos = 0;
+        var yPos = radius;
+        var decisionParam = 3 - (2 * radius);
 
-            allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, boundaryPotential,boundaryFixed, hasNotBeenFilled);
+        allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, boundaryPotential, hasNotBeenFilled);
 
-            while( yPos >= xPos ) {
+        while( yPos >= xPos ) {
 
-                ++xPos;
+            ++xPos;
 
-                if (decisionParam > 0){
+            if (decisionParam > 0){
 
-                    --yPos;
-                    decisionParam = decisionParam + 4 * (xPos - yPos) + 10;
+                --yPos;
+                decisionParam = decisionParam + 4 * (xPos - yPos) + 10;
     
-                } else {
+            } else {
     
-                    decisionParam = decisionParam + 4 * xPos + 6;
+                decisionParam = decisionParam + 4 * xPos + 6;
     
-                }
-
-                allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, boundaryPotential,boundaryFixed, hasNotBeenFilled);
-
             }
+
+            allPassed &= this.completeOctants(centreX, centreY, xPos, yPos, boundaryPotential, hasNotBeenFilled);
+
         }
+
 
         
         if(setInternal)
-            this.fillTool(centreX, centreY, internalPotential, internalFixed, hasNotBeenFilled);
+            this.fillTool(centreX, centreY, internalPotential, hasNotBeenFilled);
 
         if(setExternal)
-            this.fillExterior(externalPotential, externalFixed, hasNotBeenFilled);
+            this.fillExterior(externalPotential, hasNotBeenFilled);
     
         return allPassed;
     };
   
 
 
-    completeOctants(centreX, centreY, x, y, potential, boundaryFixed, hasNotBeenFilled){
+    completeOctants(centreX, centreY, x, y, potential, hasNotBeenFilled){
         
         var allPassed = true
 
-        allPassed &= this.fillInMeshForCircle(centreX + x, centreY + y, potential, boundaryFixed, hasNotBeenFilled);
-        allPassed &= this.fillInMeshForCircle(centreX - x, centreY + y, potential, boundaryFixed, hasNotBeenFilled);
-        allPassed &= this.fillInMeshForCircle(centreX + x, centreY - y, potential, boundaryFixed, hasNotBeenFilled);
-        allPassed &= this.fillInMeshForCircle(centreX - x, centreY - y, potential, boundaryFixed, hasNotBeenFilled);
-        allPassed &= this.fillInMeshForCircle(centreX + y, centreY + x, potential, boundaryFixed, hasNotBeenFilled);
-        allPassed &= this.fillInMeshForCircle(centreX - y, centreY + x, potential, boundaryFixed, hasNotBeenFilled);
-        allPassed &= this.fillInMeshForCircle(centreX + y, centreY - x, potential, boundaryFixed, hasNotBeenFilled);
-        allPassed &= this.fillInMeshForCircle(centreX - y, centreY - x, potential, boundaryFixed, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX + x, centreY + y, potential, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX - x, centreY + y, potential, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX + x, centreY - y, potential, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX - x, centreY - y, potential, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX + y, centreY + x, potential, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX - y, centreY + x, potential, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX + y, centreY - x, potential, hasNotBeenFilled);
+        allPassed &= this.fillInMeshForCircle(centreX - y, centreY - x, potential, hasNotBeenFilled);
 
         return allPassed;
 
     }
 
 
-    fillInMeshForCircle(x, y, potential, fixed, hasNotBeenFilled){
+    fillInMeshForCircle(x, y, potential, hasNotBeenFilled){
         
         if(!this.coordInRange(x,y))
             return false;
         
         this.mesh[x][y] = potential;
-        this.fixedIndices[x][y] = fixed;
+        this.fixedIndices[x][y] = true;
         hasNotBeenFilled[x][y] = false;
 
         return true;
@@ -106,23 +103,23 @@ class BoundaryGenerationService {
 
 
 
-    fillTool(x, y, potential, fixed, hasNotBeenFilled){
+    fillTool(x, y, potential, hasNotBeenFilled){
         
         if(this.coordInRange(x,y) && hasNotBeenFilled[x][y]){
 
-            this.fillInMeshForCircle(x, y, potential, fixed, hasNotBeenFilled);
+            this.fillInMeshForCircle(x, y, potential, hasNotBeenFilled);
 
             if(this.coordInRange(x+1, y))
-            this.fillTool(x+1, y, potential, fixed, hasNotBeenFilled);
+            this.fillTool(x+1, y, potential, hasNotBeenFilled);
             
             if(this.coordInRange(x-1, y))
-            this.fillTool(x-1, y, potential, fixed, hasNotBeenFilled);
+            this.fillTool(x-1, y, potential, hasNotBeenFilled);
             
             if(this.coordInRange(x, y+1))
-            this.fillTool(x, y+1, potential, fixed, hasNotBeenFilled);
+            this.fillTool(x, y+1, potential, hasNotBeenFilled);
             
             if(this.coordInRange(x, y-1))
-            this.fillTool(x, y-1, potential, fixed, hasNotBeenFilled);
+            this.fillTool(x, y-1, potential, hasNotBeenFilled);
 
 
         }
@@ -131,12 +128,12 @@ class BoundaryGenerationService {
 
 
 
-    fillExterior(exteriorPotential, exteriorFixed, hasNotBeenFilled){
+    fillExterior(exteriorPotential, hasNotBeenFilled){
 
         for(let i = 0; i !== this.rows; ++i){
             if (hasNotBeenFilled[i][0])
             {
-                this.fillTool(i, 0, exteriorPotential, exteriorFixed, hasNotBeenFilled);
+                this.fillTool(i, 0, exteriorPotential, hasNotBeenFilled);
             }   
         }
     
@@ -144,7 +141,7 @@ class BoundaryGenerationService {
         for(let j = 1; j !== this.cols; ++j){
                     if (hasNotBeenFilled[this.rows-1][j])
             {
-                this.fillTool(this.rows-1, j, exteriorPotential, exteriorFixed, hasNotBeenFilled);
+                this.fillTool(this.rows-1, j, exteriorPotential, hasNotBeenFilled);
             }   
         }
     
@@ -152,7 +149,7 @@ class BoundaryGenerationService {
         for(let i = 0; i !== this.rows-1; ++i){
             if (hasNotBeenFilled[i][this.cols-1])
             {
-                this.fillTool(i, this.cols-1, exteriorPotential, exteriorFixed, hasNotBeenFilled);
+                this.fillTool(i, this.cols-1, exteriorPotential, hasNotBeenFilled);
             }   
         }
     
@@ -161,7 +158,7 @@ class BoundaryGenerationService {
         for(let j = 1; j !== this.cols-1; ++j){
                     if (hasNotBeenFilled[0][j])
             {
-                this.fillTool(this.rows-1, j, exteriorPotential, exteriorFixed, hasNotBeenFilled);
+                this.fillTool(this.rows-1, j, exteriorPotential, hasNotBeenFilled);
             }   
         }    
     }

@@ -47,13 +47,10 @@
 .CircleCardInsert {
 
   position: relative;
-  top: 6.5vh;
-  left: 3.4vh; /*TODO: uncouple this class and sidebar class*/
-
 
   width: 35vh;
   height: 36vh;
-  margin-right: 0px;
+  margin: 2vh;
 
 
   background: #42A5F5;
