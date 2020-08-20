@@ -18,7 +18,8 @@ class App extends React.Component {
     this.state = {
       circleList: [],
       isRelaxed: false,
-      relaxButtonText: "Relax"
+      relaxButtonText: "Relax",
+      useLagrangeInterpol: false
     }
 
 
@@ -33,6 +34,10 @@ class App extends React.Component {
     
   }
 
+
+  removeCircle(index) {
+    this.setState({circleList: this.state.circleList.splice(0,index).concat(this.state.circleList.splice(index+1))});
+  }
 
   handleRelaxClick(){
     this.setState({isRelaxed: !this.state.isRelaxed});
@@ -81,7 +86,7 @@ class App extends React.Component {
     if(this.state.isRelaxed){
       let BPSService = new BoundaryProblemSolveService(BGService.mesh, BGService.fixedIndices);
 
-          BPSService.relaxPotentialSOR(0.00001, 150, false);
+          BPSService.relaxPotentialSOR(0.00001, 150, this.state.useLagrangeInterpol);
 
           return BPSService.mesh;
 
@@ -119,8 +124,11 @@ class App extends React.Component {
             className="Sidebar" 
             circleList={this.state.circleList} 
             addCircle={(circle) => this.addCircle(circle)} 
+            removeCircle={(i) => this.removeCircle(i)}
             handleRelaxClick={() => this.handleRelaxClick()}
             relaxButtonText={this.state.relaxButtonText}
+            handleLagrangeInterpol={() => this.setState({useLagrangeInterpol: !this.state.useLagrangeInterpol})}
+            useLagrangeInterpol={this.state.useLagrangeInterpol}
           />
 
       </div>

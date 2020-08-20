@@ -22,7 +22,6 @@ class Sidebar extends Component {
 
 
         this.state = {
-            checked : false,
             currentlyAdding : false
         }
     }
@@ -62,7 +61,7 @@ class Sidebar extends Component {
                 </div>
 
                 <div className="ShapeListContainer">
-                    <div className="ShapeTitle" onClick={ () => this.addCircle()}>Shapes</div>
+                    <div className="ShapeTitle">Shapes</div>
                     <div className="PlusSign" onClick={ () => this.setState({currentlyAdding: true})}>
 
 
@@ -80,6 +79,7 @@ class Sidebar extends Component {
                                 id={i}
                                 inserting={false} 
                                 updateable={false}
+                                removeCircle={this.props.removeCircle}
                                 
                             />)
                         }
@@ -98,7 +98,7 @@ class Sidebar extends Component {
                 </div>
 
                 <label className="InterpolSetting">
-                    <Checkbox checked={this.state.checked} setChecked = {e => {this.setState({checked: !this.state.checked})}} updateable={true}/>
+                    <Checkbox checked={this.props.useLagrangeInterpol} setChecked = {this.props.handleLagrangeInterpol} updateable={true}/>
                     <div style={{marginLeft:"1.5vh"}}>Use Lagrange Interpolation</div>
                 </label>
 
