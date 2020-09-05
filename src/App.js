@@ -17,6 +17,7 @@ class App extends React.Component {
 
     this.state = {
       circleList: [],
+      rectangleList: [],
       isRelaxed: false,
       relaxButtonText: "Relax",
       useLagrangeInterpol: true
@@ -38,6 +39,18 @@ class App extends React.Component {
   removeCircle(index) {
     this.setState({circleList: this.state.circleList.splice(0,index).concat(this.state.circleList.splice(index+1))});
   }
+
+  addRectangle(rectangle) {
+    
+    this.setState({rectangleList: [...this.state.rectangleList, rectangle]});
+    
+  }
+
+
+  removeRectangle(index) {
+    this.setState({rectangleList: this.state.rectangleList.splice(0,index).concat(this.state.rectangleList.splice(index+1))});
+  }
+
 
   handleRelaxClick(){
     this.setState({isRelaxed: !this.state.isRelaxed});
@@ -79,9 +92,8 @@ class App extends React.Component {
 
     let BGService = new BoundaryGenerationService(50, 50);
 
-    for(let i = 0; i !== this.state.circleList.length; ++i){
-      BGService.placeCirclePotentialBoundary(this.state.circleList[i]);
-    }
+    this.state.circleList.forEach((element) => BGService.placeCirclePotentialBoundary(element));
+    this.state.rectangleList.forEach((element) => element);
 
     if(this.state.isRelaxed){
       let BPSService = new BoundaryProblemSolveService(BGService.mesh, BGService.fixedIndices);
