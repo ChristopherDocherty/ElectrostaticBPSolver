@@ -15,9 +15,6 @@ class Rectangle {
 
 }
 
-
-
-
 class RectangleCard extends Component{
 
 
@@ -28,13 +25,13 @@ class RectangleCard extends Component{
         this.state = {
             showCard: true,
             Rectangle: "Rectangle" in props ? props.Rectangle : new Rectangle(20,20,10,10),
-            insertingHeight: "20vh",
+            insertingHeight: "16vh",
             normalHeight: "12vh"
         }
     }
     
 
-    addNewCircle() {
+    addNewRectangle() {
 
         let newRectangle = {
             ...this.state.Rectangle
@@ -49,7 +46,11 @@ class RectangleCard extends Component{
 
         if(this.props.inserting){
             confirmButton = 
-                <div className="ConfirmButton" onClick={() => this.addNewRectangle()}>
+                <div 
+                    className="ConfirmButton" 
+                    onClick={() => this.addNewRectangle()}
+                    style={{top:"12vh", left: "24vh"}}  
+                >
                     <div>Confirm</div>
                 </div>
         }
@@ -124,9 +125,6 @@ class RectangleCard extends Component{
             </CSSTransition>
         )
         
-
-
-
     }
 
 }

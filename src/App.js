@@ -137,6 +137,9 @@ class App extends React.Component {
             circleList={this.state.circleList} 
             addCircle={(circle) => this.addCircle(circle)} 
             removeCircle={(i) => this.removeCircle(i)}
+            rectangleList={this.state.rectangleList}
+            addRectangle={(rectangle) => this.addRectangle(rectangle)}
+            removeRectangle={(i) => this.removeRectangle(i)}
             handleRelaxClick={() => this.handleRelaxClick()}
             relaxButtonText={this.state.relaxButtonText}
             handleLagrangeInterpol={() => this.setState({useLagrangeInterpol: !this.state.useLagrangeInterpol})}

@@ -121,8 +121,6 @@ transition: opacity 300ms, transform 300ms;
 
 .ConfirmButton {
   position: absolute;
-  top: 32vh;
-  left: 24vh;
   
   
   width: 10vh;

@@ -65,7 +65,11 @@ class CircleCard extends Component {
 
         if(this.props.inserting){
             confirmButton = 
-                <div className="ConfirmButton" onClick={() => this.addNewCircle()}>
+                <div 
+                    className="ConfirmButton"  
+                    onClick={() => this.addNewCircle()}
+                    style={{top:"32vh", left: "24vh"}}
+                    >
                     <div>Confirm</div>
                 </div>
         }
