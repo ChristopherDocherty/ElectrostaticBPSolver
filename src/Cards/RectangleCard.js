@@ -6,11 +6,13 @@ import SettingsItem from './SettingsItem.js';
 
 class Rectangle {
 
-    constructor(cornerX, cornerY, width, height){
-        this.cornerX = cornerX
-        this.cornerY = cornerY
-        this.width = width
-        this.height = height
+    constructor(cornerX, cornerY, width, height, potential, fill){
+        this.cornerX = cornerX;
+        this.cornerY = cornerY;
+        this.width = width;
+        this.height = height;
+        this.potential = potential;
+        this.fill = fill;
     }
 
 }
@@ -24,9 +26,9 @@ class RectangleCard extends Component{
 
         this.state = {
             showCard: true,
-            Rectangle: "Rectangle" in props ? props.Rectangle : new Rectangle(20,20,10,10),
-            insertingHeight: "16vh",
-            normalHeight: "12vh"
+            Rectangle: "Rectangle" in props ? props.Rectangle : new Rectangle(20,20,10,10, 1, true),
+            insertingHeight: "19vh",
+            normalHeight: "15vh"
         }
     }
     
@@ -49,7 +51,7 @@ class RectangleCard extends Component{
                 <div 
                     className="ConfirmButton" 
                     onClick={() => this.addNewRectangle()}
-                    style={{top:"12vh", left: "24vh"}}  
+                    style={{top:"15vh", left: "24vh"}}  
                 >
                     <div>Confirm</div>
                 </div>
@@ -113,6 +115,26 @@ class RectangleCard extends Component{
                             inputType="text" 
                             textboxValue={this.state.Rectangle.height} 
                             setTextboxValue={(newHeight) => this.setState({Rectangle: {...this.state.Rectangle, height: parseFloat(newHeight)}})}
+                            updateable={this.props.updateable}
+                        />
+
+                    </div>
+
+                    <div className="PotentialSettings" style={{top: "11.4vh"}}> 
+
+                        <SettingsItem 
+                            title={"Potential"} 
+                            inputType="text" 
+                            textboxValue={this.state.Rectangle.potential} 
+                            setTextboxValue={(newPotential) => this.setState({Rectangle: {...this.state.Rectangle, potential: parseFloat(newPotential)}})}
+                            updateable={this.props.updateable}
+                        />
+
+                        <SettingsItem 
+                            title={"Fill"} 
+                            inputType="checkbox" 
+                            checked={this.state.Rectangle.fill}
+                            setChecked={(newFill) => this.setState({Rectangle: {...this.state.Rectangle, fill: newFill}})}
                             updateable={this.props.updateable}
                         />
 

@@ -92,8 +92,8 @@ class App extends React.Component {
 
     let BGService = new BoundaryGenerationService(50, 50);
 
-    this.state.circleList.forEach((element) => BGService.placeCirclePotentialBoundary(element));
-    this.state.rectangleList.forEach((element) => element);
+    this.state.circleList.forEach((circle) => BGService.placeCirclePotentialBoundary(circle));
+    this.state.rectangleList.forEach((rectangle) => BGService.placeRectangleBoundary(rectangle));
 
     if(this.state.isRelaxed){
       let BPSService = new BoundaryProblemSolveService(BGService.mesh, BGService.fixedIndices);

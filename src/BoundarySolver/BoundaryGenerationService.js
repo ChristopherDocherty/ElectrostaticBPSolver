@@ -14,6 +14,48 @@ class BoundaryGenerationService {
 
         
     }
+
+    placeRectangleBoundary(rectangle){
+
+        let cornerX, cornerY, width, height, potential, fill;
+
+        ({cornerX, cornerY, width, height, potential, fill} = {...rectangle} )
+
+        if (fill){
+            for(let i = cornerX; i <= cornerX+width; ++i){
+                for(let j = cornerY; j <= cornerY+height; ++j){
+
+                    if(this.coordInRange(i,j)){
+                        this.mesh[i][j] = potential;
+                        this.fixedIndices[i][j] = true;
+                    }
+                }
+            }
+        } else {
+
+            for(let i = cornerX; i <= cornerX + width; ++i){
+                this.mesh[i][cornerY] = potential;
+                this.mesh[i][cornerY+height] = potential;
+                this.fixedIndices[i][cornerY] = true;
+                this.fixedIndices[i][cornerY+height] = true;
+            }
+
+            for(let j = cornerY; j <= cornerY + height; ++j){
+                this.mesh[cornerX][j] = potential;
+                this.mesh[cornerX+width][j] = potential;
+                this.fixedIndices[cornerX][j] = true;
+                this.fixedIndices[cornerX+width][j] = true;
+
+            }
+
+        }
+
+
+    }
+
+
+
+
   
     placeCirclePotentialBoundary(circle){
 
