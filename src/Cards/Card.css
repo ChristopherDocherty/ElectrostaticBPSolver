@@ -4,13 +4,12 @@
 
 
 
-.CircleCard {
+.Card {
 
     position: relative;
-    width: 35vh;
-    height: 32vh;
-    margin: 2vh;
 
+    width: 35vh;
+    margin: 2vh;
 
     background: #42A5F5;
     border-radius: 9px;
@@ -20,23 +19,23 @@
 }
 
 
-.CircleCard-enter {
+.Card-enter {
     opacity: 0;
     transform: translateY(-10%);
 
 }
 
-.CircleCard-enter-active {
+.Card-enter-active {
     opacity: 1;
     transform: translateY(0);
     transition: opacity 300ms, transform 300ms;
 }
 
-.CircleCard-exit {
+.Card-exit {
   opacity: 1;
 }
 
-.CircleCard-exit-active {
+.Card-exit-active {
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 300ms, transform 300ms;
@@ -44,17 +43,12 @@
 
 
 
-.CircleCardInsert {
+.CardInsert {
 
   position: relative;
-  top: 6.5vh;
-  left: 3.4vh; /*TODO: uncouple this class and sidebar class*/
-
 
   width: 35vh;
-  height: 36vh;
-  margin-right: 0px;
-
+  margin: 2vh;
 
   background: #42A5F5;
   border-radius: 9px;
@@ -70,20 +64,20 @@
 }
 
 
-.CircleCardInsert-enter {
+.CardInsert-enter {
   transform: translateY(-100%);
 }
 
-.CircleCardInsert-enter-active {
+.CardInsert-enter-active {
   transform: translateY(0);
   transition: transform 300ms;
 }
 
-.CircleCardInsert-exit {
+.CardInsert-exit {
 opacity: 1;
 }
 
-.CircleCardInsert-exit-active {
+.CardInsert-exit-active {
 opacity: 0;
 transform: translateX();
 transition: opacity 300ms, transform 300ms;
@@ -127,8 +121,6 @@ transition: opacity 300ms, transform 300ms;
 
 .ConfirmButton {
   position: absolute;
-  top: 32vh;
-  left: 24vh;
   
   
   width: 10vh;
@@ -139,6 +131,14 @@ transition: opacity 300ms, transform 300ms;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  cursor: pointer;    
+  user-select: none; 
+  -webkit-user-select: none;
+  -khtml-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+
 }
 
 
@@ -150,4 +150,7 @@ transition: opacity 300ms, transform 300ms;
 
   width: 2.5vh;
   height: 2.5vh;
+
+  cursor: pointer;
+
 }

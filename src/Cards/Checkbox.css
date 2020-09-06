@@ -18,7 +18,7 @@ input[type="checkbox"]{
 
     width: 1.6vh;
     height: 1.6vh;
-    background: green;
+    background: #0d47a1;
     border-radius: 2px;
 
     transform: scale(1.1);
