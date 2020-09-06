@@ -131,6 +131,14 @@ transition: opacity 300ms, transform 300ms;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  cursor: pointer;    
+  user-select: none; 
+  -webkit-user-select: none;
+  -khtml-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+
 }
 
 
@@ -142,4 +150,7 @@ transition: opacity 300ms, transform 300ms;
 
   width: 2.5vh;
   height: 2.5vh;
+
+  cursor: pointer;
+
 }

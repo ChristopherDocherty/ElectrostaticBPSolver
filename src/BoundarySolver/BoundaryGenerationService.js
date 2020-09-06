@@ -34,17 +34,29 @@ class BoundaryGenerationService {
         } else {
 
             for(let i = cornerX; i <= cornerX + width; ++i){
-                this.mesh[i][cornerY] = potential;
-                this.mesh[i][cornerY+height] = potential;
-                this.fixedIndices[i][cornerY] = true;
-                this.fixedIndices[i][cornerY+height] = true;
+
+                if(this.coordInRange(i, cornerY)){
+                    this.mesh[i][cornerY] = potential;
+                    this.fixedIndices[i][cornerY] = true;
+                }
+
+                if(this.coordInRange(i, cornerY+height)){
+                    this.mesh[i][cornerY+height] = potential;
+                    this.fixedIndices[i][cornerY+height] = true;
+                }
             }
 
             for(let j = cornerY; j <= cornerY + height; ++j){
-                this.mesh[cornerX][j] = potential;
-                this.mesh[cornerX+width][j] = potential;
-                this.fixedIndices[cornerX][j] = true;
-                this.fixedIndices[cornerX+width][j] = true;
+                
+                if(this.coordInRange(cornerX, j)){
+                    this.mesh[cornerX][j] = potential;
+                    this.fixedIndices[cornerX][j] = true;
+                }
+
+                if(this.coordInRange(cornerX+width, j)){
+                    this.mesh[cornerX+width][j] = potential;
+                    this.fixedIndices[cornerX+width][j] = true;
+                }
 
             }
 

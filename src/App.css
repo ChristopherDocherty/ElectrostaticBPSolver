@@ -1,5 +1,5 @@
 
-.testing {
+.graph {
   position: absolute;
   top:10vh;
   left:15vw;
@@ -13,6 +13,17 @@
   overflow:hidden;
 }
 
+
+
+.SourceLink {
+  position: absolute;
+}
+
+.icon {
+  height: 5vh;
+  width: 5vh;
+  margin: 3px;
+}
 
 .Sidebar {
   position: absolute;

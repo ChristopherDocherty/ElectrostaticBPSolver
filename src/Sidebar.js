@@ -41,18 +41,17 @@ class Sidebar extends Component {
 
     render() {
 
-        console.log(this.state.shapeBeingAdded);
         let addingShape = null
 
         if(this.state.currentlyAdding){
-            if(this.state.shapeBeingAdded == "circle")
+            if(this.state.shapeBeingAdded === "circle")
                 addingShape =  <CircleCard 
                                     inserting={true} 
                                     updateable={true}
                                     insertNewCircle={(circle) => {this.addCircle(circle)}}
                                     removeCircle={() => this.setState({currentlyAdding: !this.state.currentlyAdding})}
                                 /> 
-            else if (this.state.shapeBeingAdded == "rectangle")
+            else if (this.state.shapeBeingAdded === "rectangle")
                 addingShape = <RectangleCard 
                                 inserting={true} 
                                 updateable={true}
