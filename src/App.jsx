@@ -1,9 +1,9 @@
 import React from 'react';
 import BoundaryGenerationService from './BoundarySolver/BoundaryGenerationService';
 import BoundaryProblemSolveService from './BoundarySolver/BoundaryProblemSolveService';
-import Sidebar from "./Sidebar.js";
-import Heatmap from './Heatmap.js';
-import InfoModal from './InfoModal.js'
+import Sidebar from "./Sidebar";
+import Heatmap from './Heatmap';
+import InfoModal from './InfoModal'
 import ParentSize from '@vx/responsive/lib/components/ParentSize';
 
 import './App.css';

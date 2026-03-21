@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './SettingsItem.css';
-import Checkbox from './Checkbox.js';
+import Checkbox from './Checkbox';
 
 
 class SettingsItem extends Component {
