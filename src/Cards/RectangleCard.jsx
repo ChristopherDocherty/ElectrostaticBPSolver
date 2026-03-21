@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Card.css';
 import {CSSTransition} from 'react-transition-group';
-import SettingsItem from './SettingsItem.js';
+import SettingsItem from './SettingsItem';
 
 
 class Rectangle {

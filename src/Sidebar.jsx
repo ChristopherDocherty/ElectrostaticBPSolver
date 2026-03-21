@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './Sidebar.css';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import CircleCard from './Cards/CircleCard.js';
+import CircleCard from './Cards/CircleCard';
 import Checkbox from './Cards/Checkbox';
-import RectangleCard from './Cards/RectangleCard.js';
+import RectangleCard from './Cards/RectangleCard';
 
 
 
