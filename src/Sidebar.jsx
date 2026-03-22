@@ -22,6 +22,9 @@ class Sidebar extends Component {
             currentlyAdding: false,
             shapeBeingAdded: "rectangle"
         }
+
+        this.newShapesRef = React.createRef();
+        this.plusSignRef = React.createRef();
     }
 
 
@@ -75,16 +78,16 @@ class Sidebar extends Component {
 
                     <div className="HideForAnimation"></div>
 
-                    <CSSTransition in={this.state.showAddShape} timeout={300} classNames="NewShapesContainer">
-                        <div className="NewShapesContainer">
+                    <CSSTransition in={this.state.showAddShape} timeout={300} classNames="NewShapesContainer" nodeRef={this.newShapesRef}>
+                        <div className="NewShapesContainer" ref={this.newShapesRef}>
 
                             <div className="NewCircleIcon" onClick={ () => this.setState({currentlyAdding: true, showAddShape: false, shapeBeingAdded:"circle"})}></div>
                             <div className="NewRectangleIcon" onClick={ () => this.setState({currentlyAdding: true, showAddShape: false, shapeBeingAdded:"rectangle"})}></div>
                         </div>                    
                     </CSSTransition>
 
-                    <CSSTransition in={this.state.showAddShape} timeout={300} classNames="PlusSign">
-                        <div className="PlusSign" onClick={ () => this.setState({showAddShape: !this.state.showAddShape})}>
+                    <CSSTransition in={this.state.showAddShape} timeout={300} classNames="PlusSign" nodeRef={this.plusSignRef}>
+                        <div className="PlusSign" ref={this.plusSignRef} onClick={ () => this.setState({showAddShape: !this.state.showAddShape})}>
                     
 
 

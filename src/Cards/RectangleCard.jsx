@@ -30,6 +30,8 @@ class RectangleCard extends Component{
             insertingHeight: "19vh",
             normalHeight: "15vh"
         }
+
+        this.nodeRef = React.createRef();
     }
     
 
@@ -66,9 +68,11 @@ class RectangleCard extends Component{
                 classNames= {this.props.inserting ? "CardInsert RectangleCardInsert" : "Card RectangleCard"}
                 style = {this.props.inserting ? {height:this.state.insertingHeight} : {height:this.state.normalHeight}}
                 unmountOnExit
+                nodeRef={this.nodeRef}
             >
 
-                <div 
+                <div
+                ref={this.nodeRef}
                 className={this.props.inserting ? "CardInsert RectangleCardInsert" : "Card RectangleCard"}
                 style = {this.props.inserting ? {height:this.state.insertingHeight} : {height:this.state.normalHeight}}
                 >

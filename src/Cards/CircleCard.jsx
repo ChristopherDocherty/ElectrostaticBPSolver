@@ -44,6 +44,8 @@ class CircleCard extends Component {
             insertingHeight: "36vh",
             normalHeight: "32vh"
         }
+
+        this.nodeRef = React.createRef();
     }
     
 
@@ -83,10 +85,12 @@ class CircleCard extends Component {
                     classNames= {this.props.inserting ? "CardInsert CircleCardInsert" : "Card CircleCard"}
                     style={this.props.inserting ? {height:this.state.insertingHeight} : {height:this.state.normalHeight}}
                     unmountOnExit
+                    nodeRef={this.nodeRef}
                   >
 
-                    <div 
-                        className={this.props.inserting ? "CardInsert CircleCardInsert" : "Card CircleCard"} 
+                    <div
+                        ref={this.nodeRef}
+                        className={this.props.inserting ? "CardInsert CircleCardInsert" : "Card CircleCard"}
                         style={this.props.inserting ? {height:this.state.insertingHeight} : {height:this.state.normalHeight}}>
 
 
