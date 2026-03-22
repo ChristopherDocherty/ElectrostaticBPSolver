@@ -4,7 +4,7 @@ import BoundaryProblemSolveService from './BoundarySolver/BoundaryProblemSolveSe
 import Sidebar from "./Sidebar";
 import Heatmap from './Heatmap';
 import InfoModal from './InfoModal'
-import ParentSize from '@vx/responsive/lib/components/ParentSize';
+import { ParentSize } from '@visx/responsive';
 
 import './App.css';
 

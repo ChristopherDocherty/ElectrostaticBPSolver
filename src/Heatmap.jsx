@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Group } from '@vx/group';
-import { scaleLinear } from '@vx/scale';
-import {HeatmapRect } from '@vx/heatmap';
+import { Group } from '@visx/group';
+import { scaleLinear } from '@visx/scale';
+import { HeatmapRect } from '@visx/heatmap';
 
 
 
